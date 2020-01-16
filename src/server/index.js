@@ -34,7 +34,7 @@ app.get('/test', function(request, response) {
 })
 
 app.post('/sentiment', function(request, response) {
-
+    console.log(request.body)
 })
 
 
