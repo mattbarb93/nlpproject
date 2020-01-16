@@ -28,28 +28,14 @@ app.listen(8081, function () {
 
 const userData = []
 
-/*app.get('/test', function (req, res) {
-    res.send(mockAPIResponse)
-})
-*/
-app.get('/api', function (req, res) {
-    textapi.sentiment({
-        'text': 'John is a very good football player!'
-    }, function (error, response) {
-        if (error === null) {
-            console.log(response)
-            res.send(response)
-        }
-    })
+app.get('/test', function(request, response) {
+    response.send(mockAPIResponse)
+    console.log(mockAPIResponse)
 })
 
-app.post('/api', function (req, res) {
-    let data = req.body;
-    console.log(data)
-    newEntry = {
-      text: data.text
-    }
-  
-    userData.push(newEntry)
-    res.send(userData)
-  })
+app.post('/sentiment', function(request, response) {
+
+})
+
+
+
