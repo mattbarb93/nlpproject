@@ -13,14 +13,18 @@ function handleSubmit(event) {
     postData('http://localhost:8081/sentiment', {text: formText})
     
     
-    Client.checkForName(formText)
+    //Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
     fetch('http://localhost:8081/sentiment')
     .then(res => res.json())
     .then(function(res) {
         console.log(res)
-        //document.getElementById('results').innerHTML = res.polarity
+        document.getElementById('user-text').innerHTML = res.text
+        document.getElementById('polarity').innerHTML = res.polarity
+        document.getElementById('subjectivity').innerHTML = res.subjectivity
+        document.getElementById('polarity-confidence').innerHTML = res.polarity_confidence
+        document.getElementById('subjectivity-confidence').innerHTML = res.subjectivity_confidence
     })
 
     /*
