@@ -13,6 +13,13 @@ var textapi = new aylien({
 
 const app = express()
 
+/* Dependencies */
+const bodyParser = require('body-parser')
+/* Middleware*/
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 app.use(express.static('dist'))
 
 console.log(__dirname)
@@ -27,6 +34,7 @@ app.listen(8081, function () {
 })
 
 const userData = []
+let latestResponse = []
 
 app.get('/test', function(request, response) {
     response.send(mockAPIResponse)
@@ -34,8 +42,27 @@ app.get('/test', function(request, response) {
 })
 
 app.post('/sentiment', function(request, response) {
-    console.log(request.body)
+    let data = request.body;
+    
+    textapi.sentiment({
+        text: data.text
+      }, function(error, response) {
+        if (error === null) {
+          console.log("response", response)
+          latestResponse = response
+          userData["text"] = response
+        }
+      });
+      response.send(latestResponse)
 })
+
+
+
+app.get('/', function(request, response) {
+    response.send(userData)
+})
+
+
 
 
 
