@@ -1,3 +1,5 @@
-Currently able to send the user text from the client side to the server side.
+I'm finally able to send the API data from the server to the client side, however it takes me two calls to display the first one I made.
 
-The API is being called correctly, but now I struggle to send the API info back to the client side!
+Example: 
+server sends "hello!", client retrieves undefined
+server sends "2nd hello!", client retrieves "hello!"
