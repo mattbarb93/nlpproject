@@ -22,39 +22,40 @@ app.use(express.static('dist'))
 app.listen(8081, function () {
   console.log('Example app listening on port 8081!')
 })
-/*
-app.get('/', function (req, res) {
-    res.sendFile('dist/index.html')
-})
-*/
-// designates what port the app will listen to for incoming requests
-
 
 
 app.get('/all', getAll)
 app.post('/sentiment', postSentiment)
 
 
+//FUNCTION TO CALL THE API AND SEND THE RESPONSE TO THE CLIENT SIDE
 
+//THE ISSUE RIGHT NOW IS THAT THE RESPONSE.END IS BEING
+//SENT BEFORE THE API IS CALLED AND THE INFORMATION
+//ADDED TO THE APP.
 function postSentiment(request, response) {
-    let data = request.body;
-    console.log(data)
-    textapi.sentiment({
-        text: data.text
-      }, function(error, response) {
-        if (error === null) {
-          console.log("response", response)
-          projectData["text"] = response
-          latestResponse = response
-        }
-      });
-      response.send(latestResponse)
-      console.log('this is latest response after the text goes in the function: ' + latestResponse.text)
-      
+
+  let data = request.body;
+  console.log(data)
+  //API call
+  textapi.sentiment({
+    //defining text that will be used on API call
+    text: data.text
+  }, function (error, response) {
+    if (error === null) {
+      console.log("response", response)
+      projectData["text"] = response
+      latestResponse = response
+    }
+  });
+//TO SOLVE THE ISSUE, CALL IT INSIDE A SET TIMEOUT FUNCTION!
+  setTimeout((function() {response.send(latestResponse)}), 500);
+  console.log('this is latest response after the text goes in the function: ' + latestResponse.text)
+
 }
 
 function getAll(request, response) {
-    response.send(projectData)
+  response.send(projectData)
 }
 
 
